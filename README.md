@@ -1,4 +1,4 @@
-#GitSearch
+# GitSearch
 
 ![image](https://user-images.githubusercontent.com/79044490/229721167-73e05447-38d7-41eb-be55-61318b310d62.png)
 ![image](https://user-images.githubusercontent.com/79044490/229721380-678ba2b6-df93-4068-a27d-7ad347460975.png)

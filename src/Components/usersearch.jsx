@@ -1,6 +1,39 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import fetchUser from './config';
+
+const useStyles = makeStyles((theme) => ({
+  container:{
+    width:'50%', 
+    marginLeft:'28%', 
+    marginBottom:'2rem'
+  },
+inputText:{
+  height:'1.3rem', 
+  width:'30%', 
+  textAlign:'center', 
+  marginTop:'1rem', 
+  marginBottom:'1rem'
+},
+userDetails:{
+  border:'1px solid', 
+  borderBlockColor:'black', 
+  width:'90%', 
+  marginBottom:'.5rem', 
+  display:'flex', 
+  flexDirection:'column', 
+  alignItems:"center", 
+  height:'10rem'
+},
+userImg:{
+  height:'7rem' ,
+  width:'7rem', 
+  marginTop:'.5rem'
+}
+}));
 
 function UserSearch() {
+  const classes = useStyles();
   const [query, setQuery] = useState('');
   const [users, setUsers] = useState([]);
 
@@ -21,14 +54,7 @@ function UserSearch() {
       setUsers([]);
       return;
     }
-    fetch(`https://api.github.com/search/users?q=${query}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data.items);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchUser()
   };
 
   const handleInputChange = (event) => {
@@ -38,15 +64,15 @@ function UserSearch() {
   };
 
   return (
-    <div style={{width:'50%', marginLeft:'28%', marginBottom:'2rem'}}>
+    <div className={classes.container}>
       <form>
-        <input type="text" value={query} onChange={handleInputChange} style={{height:'1.3rem', width:'30%', textAlign:'center', marginTop:'1rem', marginBottom:'1rem'}}/>
+        <input className={classes.inputText} type="text" value={query} onChange={handleInputChange}/>
       </form>
-      {users?.map((user) => (
+      {users?.map(({id,avatar_url,html_url,login}) => (
         <div className="container" >
-        <div key={user.id} style={{border:'1px solid', borderBlockColor:'black', width:'90%', marginBottom:'.5rem', display:'flex', flexDirection:'column', alignItems:"center", height:'10rem'}}>
-          <img src={user.avatar_url} alt={user.login} style={{height:'7rem' ,width:'7rem', marginTop:'.5rem'}}/>
-          <a href={user.html_url} target='_blank' rel="noreferrer">{user.login}</a>
+        <div className={classes.userDetails} key={id}>
+          <img className={classes.userImg} src={avatar_url} alt={login}/>
+          <a href={html_url} target='_blank' rel="noreferrer">{login}</a>
         </div>
         </div>
       ))}

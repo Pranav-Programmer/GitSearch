@@ -1,6 +1,43 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  container:{
+    width:'50%', 
+    marginLeft:'25%'
+  },
+  inputSearch:{
+    height:'1.5rem', 
+    width:'30%', 
+    textAlign:'center', 
+    marginLeft:'8%'
+  },
+  button:{
+    height:'1.75rem', 
+    width:'30%', 
+    marginLeft:'1rem', 
+    backgroundColor:'#7fff00', 
+    border:'none'
+  },
+  innerContainer:{
+    border:'1px solid', 
+    borderBlockColor:'black', 
+    width:'90%', 
+    marginBottom:'.5rem', 
+    display:'flex', 
+    flexDirection:'column', 
+    alignItems:"center", 
+    height:'10rem'
+  },
+  img:{
+    height:'7rem' ,
+    width:'7rem', 
+    marginTop:'.5rem'
+  }
+}));
 
 function GitHubSearch() {
+  const classes = useStyles();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -24,21 +61,21 @@ function GitHubSearch() {
   };
 
   return (
-    <div style={{width:'50%', marginLeft:'25%'}}>
+    <div className={classes.container}>
         <h1>GitHub User Search</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <input type="text" value={query} onChange={handleChange} style={{height:'1.5rem', width:'30%', textAlign:'center', marginLeft:'8%'}}/>
+          <input className={classes.inputSearch} type="text" value={query} onChange={handleChange}/>
         </label>
-        <button type="submit" style={{height:'1.75rem', width:'30%', marginLeft:'1rem', backgroundColor:'#7fff00', border:'none'}}>Search</button>
+        <button className={classes.button} type="submit">Search</button>
       </form>
       
       {results.length > 0 && (
         <ul >
           {results.map((user) => (
             <ul key={user.id} >
-            <div className="container" style={{border:'1px solid', borderBlockColor:'black', width:'90%', marginBottom:'.5rem', display:'flex', flexDirection:'column', alignItems:"center", height:'10rem'}}>
-              <img src={user.avatar_url} alt={user.login} style={{height:'7rem' ,width:'7rem', marginTop:'.5rem'}}/>
+            <div className={classes.innerContainer}>
+              <img className={classes.img} src={user.avatar_url} alt={user.login} />
               <a href={user.html_url} target='_blank' rel="noreferrer">{user.login}</a>
               </div>
             </ul>
